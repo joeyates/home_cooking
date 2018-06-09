@@ -3,4 +3,5 @@
 /doc/
 /Gemfile.lock
 /pkg/
+/.rspec_status
 /tmp/
