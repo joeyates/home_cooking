@@ -1,0 +1,6 @@
+/.bundle/
+/coverage/
+/doc/
+/Gemfile.lock
+/pkg/
+/tmp/
