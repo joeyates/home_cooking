@@ -1,10 +1,15 @@
 # `personal_kitchen`
 
-Use [chef][chef] to configure your accounts on various computers.
+Configure your environment on various computers.
 
 You can manage your local computer, or a desktop or server over a network.
 
-[chef]: https://www.chef.io/
+# Why?
+
+Setting up a computer is a pain - you have to install various programs,
+maybe clone your dot-files repo and copy a whole load of secrets.
+
+This project aims to unify all of those activities.
 
 # Overview
 
@@ -13,10 +18,9 @@ You can manage your local computer, or a desktop or server over a network.
 The key to the whole `personal_kitchen` system is the data bag key (see below).
 You'll need to keep it in a safe place.
 
-## Two Repos
+## A Repo
 
-You'll need to create two Git repos: one for your personal kitchen and one for
-your passwords, as is explained below.
+You'll need to create a Git repo for your personal kitchen.
 
 When you set up a computer, you need to be able to access the repo of your
 personal kitchen. You either do this by pushing the deploy from another
@@ -33,18 +37,11 @@ There are three independent modules:
 
 For each, you can specify programs to install and configurations to set.
 
-## Secrets
+# Dependencies
 
-Every computer user should have a password manager for Internet passwords,
-SSH private keys, access tokens and the like.
-
-`personal_kitchen` installs, and relies heavily on, [`pass`][pass]
-"the standard unix password manager".
-
-Please also use `pass` as your personal password manager - that way you'll have
-everything in the same place!
-
-[pass]: https://www.passwordstore.org/
+```shell
+# apt install gpg2 pass
+```
 
 # Install
 
@@ -52,58 +49,21 @@ everything in the same place!
 $ gem install personal_kitchen
 ```
 
-# Preparation
+# Create your Personal Kitchen
 
-## Create a Git Repository for your Personal Kitchen
+### Create a Git Repository for your Personal Kitchen
 
 Create a private Git repository (i.e. on GitLab or BitBucket), where you can
 keep your personal kitchen.
 
-## Create a Git Repository for your `pass` Store
-
-Your `pass` store needs to be backed up on a remote Git repostiory. So, before
-bootstrapping your personal kitchen, you'll need to set up a private
-Git repository for it.
-
-# Create your Personal Kitchen
+## Creation
 
 ```shell
-$ personal_kitchen init my-kitchen
+$ personal_kitchen init --path my-kitchen
 ```
 
 This creates a directory `my-kitchen` with all the necessary initial setup.
 Obviously, you can call it whatever you like.
-
-During bootstrap, a new SSH key for access to your `pass` repo will be
-generated.
-You should set up this key as a deployment key (e.g. under "Settings" ->
-"Access keys" for BitBucket repos).
-
-`pass` uses a GPG key to encrypt passwords. By default, `personal_kitchen`
-creates a new GPG key specifically for `pass`.
-
-### Warning for Users with Existing GPG Keyrings
-
-If you already have GPG set up, you'll probably be intending to save your
-keyring in your `pass` store. Unfortunately, this creates a chicken-and-egg
-situation: bootstrapping your kitchen requires the GPG key to be available
-right from the start.
-
-To get around this problem, you'll need to do the following:
-
-* choose an existing GPG secret key in your keyring, or add a new one specially
-  for `pass`,
-* export an ASCII armored file with the key:
-
-```shell
-$ TODO
-```
-
-* Pass the key to `init`:
-
-```shell
-$ personal_kitchen init my-kitchen --gpg-key mykey
-```
 
 # Set Some Defaults
 
@@ -113,7 +73,7 @@ $ personal-kitchen defaults
 
 This command allows you to set up default values to be used across all nodes.
 
-Defaults are stored in your `pass` repository under `personal_kitchen/user`.
+Defaults are stored in your data bags under `personal/user`.
 
 Defaults are:
 
@@ -151,8 +111,6 @@ computers you use.
 
 Everything that is host ("node") specific, should go in the node configuration
 file (under `nodes`).
-
-Everything that is secret or sensitive, should go in your `pass` store.
 
 ## Default/Global
 
@@ -200,6 +158,10 @@ $ knife solo cook root@$HOSTNAME
 ```
 
 # How It Works
+
+A [chef][chef] kitchen is generated with basic setup.
+
+[chef]: https://www.chef.io/
 
 ## Secrets
 
