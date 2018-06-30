@@ -1,0 +1,5 @@
+source "https://supermarket.chef.io"
+
+metadata
+
+cookbook "shell", path: "/home/joe/code/chef/shell"
