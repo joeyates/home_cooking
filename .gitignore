@@ -5,3 +5,4 @@
 /pkg/
 /.rspec_status
 /tmp/
+/.vagrant/
