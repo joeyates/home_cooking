@@ -2,12 +2,11 @@ require "thor"
 
 class PersonalKitchen::CLI < Thor
   autoload :Init, "personal_kitchen/cli/init"
+  autoload :Defaults, "personal_kitchen/cli/defaults"
 
   desc "init [OPTIONS]", "Creates a personal kitchen"
   long_desc <<~EOT
-    Creates a Chef cookbook with the necessary dependencies, sets up the minimal
-    data bag, creates an SSH key, a GPG key and a pass store.
-    It then adds all files to a new git repo, and commits them.
+    Creates a Chef cookbook with the necessary dependencies.
   EOT
   method_option(
     "name",
@@ -17,6 +16,20 @@ class PersonalKitchen::CLI < Thor
   def init
     require "personal_kitchen/cli/init"
     Init.new(symbolized_options).run
+  end
+
+  desc "defaults [OPTIONS]", "Sets defaults"
+  long_desc <<~EOT
+    Sets defaults for: username
+  EOT
+  method_option(
+    "username",
+    type: :string, required: true, banner: "your default user name",
+    aliases: ["-u"]
+  )
+  def defaults
+    require "personal_kitchen/cli/defaults"
+    Defaults.new(symbolized_options).run
   end
 
   private
