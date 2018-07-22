@@ -18,8 +18,8 @@ class PersonalKitchen::CLI::Init < Thor
       self.destination_root = target_directory
       directory "templates", "."
       create_data_bag_key
-      tell_user_to_save_data_bag_key
       install_gems
+      tell_user_to_save_data_bag_key
     end
   end
 
@@ -39,10 +39,12 @@ class PersonalKitchen::CLI::Init < Thor
 
       Key:
       #{data_bag_key}
+
     EOT
   end
 
   def install_gems
+    puts "Installing project dependencies..."
     Dir.chdir(target_directory) do
       puts `BUNDLE_GEMFILE=#{gemfile_path} bundle install`
     end
