@@ -1,5 +1,6 @@
 source "https://supermarket.chef.io"
 
-metadata
+cookbook "personal", path: "./site-cookbooks/personal"
+cookbook "hosts", git: "https://gitlab.com/joeyates/hosts"
 
-cookbook "shell", path: "/home/joe/code/chef/shell"
+metadata
