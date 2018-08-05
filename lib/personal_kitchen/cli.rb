@@ -1,8 +1,13 @@
 require "thor"
 
 class PersonalKitchen::CLI < Thor
+  require "personal_kitchen/cli/helpers"
+
   autoload :Init, "personal_kitchen/cli/init"
   autoload :Defaults, "personal_kitchen/cli/defaults"
+  autoload :EncryptedFile, "personal_kitchen/cli/encrypted_file"
+
+  include Helpers
 
   desc "init [OPTIONS]", "Creates a personal kitchen"
   long_desc <<~EOT
@@ -15,7 +20,7 @@ class PersonalKitchen::CLI < Thor
   )
   def init
     require "personal_kitchen/cli/init"
-    Init.new(symbolized_options).run
+    Init.new(symbolized(options)).run
   end
 
   desc "defaults [OPTIONS]", "Sets defaults"
@@ -29,12 +34,9 @@ class PersonalKitchen::CLI < Thor
   )
   def defaults
     require "personal_kitchen/cli/defaults"
-    Defaults.new(symbolized_options).run
+    Defaults.new(symbolized(options)).run
   end
 
-  private
-
-  def symbolized_options
-    options.reduce({}) { |h, (k, v)| h[k.intern] = v; h }
-  end
+  desc "file subcommand ...ARGS", "manage files in encrypted data bags"
+  subcommand "file", EncryptedFile
 end

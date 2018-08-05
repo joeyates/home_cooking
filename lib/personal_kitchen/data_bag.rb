@@ -14,6 +14,10 @@ class PersonalKitchen::DataBag
     load_config
   end
 
+  def get(key)
+    data[key]
+  end
+
   def set(key, value)
     data[key] = value
   end
