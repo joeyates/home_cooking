@@ -32,6 +32,11 @@ class PersonalKitchen::CLI::EncryptedFile < Thor
     data_bag.save!
   end
 
+  desc "list", "list files in the encrypted data bag"
+  def list
+    puts files.map { |f| f["path"] }.sort.join("\n")
+  end
+
   private
 
   def data_bag
