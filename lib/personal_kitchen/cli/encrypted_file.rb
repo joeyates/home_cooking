@@ -16,7 +16,7 @@ class PersonalKitchen::CLI::EncryptedFile < Thor
     banner: "force overwrite of existing files",
     aliases: ["-f"]
   )
-  def add(path, *args, **kwargs)
+  def add(path)
     check_relative!(path)
     @path = path
     @full_path = File.expand_path(path, ENV["HOME"])
@@ -28,8 +28,19 @@ class PersonalKitchen::CLI::EncryptedFile < Thor
       end
       remove(path)
     end
-    files << entry
+    files << build_entry
     data_bag.save!
+  end
+
+  desc "show <path>", "show content of file in the encrypted data bag"
+  def show(path)
+    @path = path
+    @full_path = File.expand_path(path, ENV["HOME"])
+    if exists_in_data_bag?
+      puts entry["content"]
+    else
+      raise "The file '#{full_path}' is not present in the data bag"
+    end
   end
 
   desc "list", "list files in the encrypted data bag"
@@ -44,7 +55,7 @@ class PersonalKitchen::CLI::EncryptedFile < Thor
       PersonalKitchen::DataBag.new(group: "personal", item: "files")
   end
 
-  def entry
+  def build_entry
     {
       "path" => path,
       "mode" => mode,
@@ -63,6 +74,10 @@ class PersonalKitchen::CLI::EncryptedFile < Thor
 
   def remove(path)
     files.reject! { |f| f["path"] == path }
+  end
+
+  def entry
+    files.find { |f| f["path"] == path }
   end
 
   def files
