@@ -26,9 +26,17 @@ class PersonalKitchen::CLI::EncryptedFile < Thor
         raise "File '#{full_path}' already exists in the data bag, " +
           "use `--force` to overwrite"
       end
-      remove(path)
+      internal_remove(path)
     end
     files << build_entry
+    data_bag.save!
+  end
+
+  desc "remove <path>", "remove a file from the encrypted data bag"
+  def remove(path)
+    check_relative!(path)
+    @path = path
+    internal_remove(path)
     data_bag.save!
   end
 
@@ -72,7 +80,7 @@ class PersonalKitchen::CLI::EncryptedFile < Thor
     files.any? { |f| f["path"] == path }
   end
 
-  def remove(path)
+  def internal_remove(path)
     files.reject! { |f| f["path"] == path }
   end
 
