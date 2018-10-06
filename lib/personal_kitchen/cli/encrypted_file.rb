@@ -1,3 +1,4 @@
+require "base64"
 require "thor"
 
 class PersonalKitchen::CLI::EncryptedFile < Thor
@@ -5,6 +6,7 @@ class PersonalKitchen::CLI::EncryptedFile < Thor
 
   include PersonalKitchen::CLI::Helpers
 
+  attr_reader :encode
   attr_reader :full_path
   attr_reader :path
 
@@ -16,10 +18,18 @@ class PersonalKitchen::CLI::EncryptedFile < Thor
     banner: "force overwrite of existing files",
     aliases: ["-f"]
   )
+  method_option(
+    "encode",
+    type: :boolean,
+    required: false,
+    banner: "encode the file as Base64",
+    aliases: ["-e"]
+  )
   def add(path)
     check_relative!(path)
     @path = path
     @full_path = File.expand_path(path, ENV["HOME"])
+    @encode = encode?
     check_file_exists!
     if exists_in_data_bag?
       if !force?
@@ -41,11 +51,24 @@ class PersonalKitchen::CLI::EncryptedFile < Thor
   end
 
   desc "show <path>", "show content of file in the encrypted data bag"
+  method_option(
+    "decode",
+    type: :boolean,
+    required: false,
+    banner: "decode Base64 encoded files",
+    aliases: ["-e"]
+  )
   def show(path)
     @path = path
     @full_path = File.expand_path(path, ENV["HOME"])
     if exists_in_data_bag?
-      puts entry["content"]
+      content = entry["content"]
+      encoding = entry["encoding"]
+      if encoding == "Base64" && decode?
+        puts Base64.decode64(encoding)
+      else
+        puts content
+      end
     else
       raise "The file '#{full_path}' is not present in the data bag"
     end
@@ -64,11 +87,18 @@ class PersonalKitchen::CLI::EncryptedFile < Thor
   end
 
   def build_entry
+    content = ::File.read(full_path)
     {
       "path" => path,
       "mode" => mode,
-      "content" => ::File.read(full_path)
-    }
+    }.tap do |e|
+      if encode
+        e["encoding"] = "Base64"
+        e["content"] = Base64.encode64(content)
+      else
+        e["content"] = content
+      end
+    end
   end
 
   def mode
@@ -82,6 +112,14 @@ class PersonalKitchen::CLI::EncryptedFile < Thor
 
   def internal_remove(path)
     files.reject! { |f| f["path"] == path }
+  end
+
+  def decode?
+    symbolized_options[:decode]
+  end
+
+  def encode?
+    symbolized_options[:encode]
   end
 
   def entry
