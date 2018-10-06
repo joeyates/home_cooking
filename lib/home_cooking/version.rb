@@ -1,4 +1,4 @@
-module PersonalKitchen
+module HomeCooking
   MAJOR = 0
   MINOR = 1
   TEENY = 0

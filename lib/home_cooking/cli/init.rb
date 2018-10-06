@@ -1,4 +1,4 @@
-class PersonalKitchen::CLI::Init < Thor
+class HomeCooking::CLI::Init < Thor
   require "securerandom"
 
   include Thor::Actions

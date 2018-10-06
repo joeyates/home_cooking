@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "personal_kitchen"
+require "home_cooking"
 
 RSpec.configure do |config|
   config.example_status_persistence_file_path = ".rspec_status"

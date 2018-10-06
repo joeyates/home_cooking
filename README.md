@@ -1,4 +1,4 @@
-# `personal_kitchen`
+# `home_cooking`
 
 Configure your environment on various computers.
 
@@ -11,11 +11,15 @@ maybe clone your dot-files repo and copy a whole load of secrets.
 
 This project aims to unify all of those activities.
 
+# Why the corny name?
+
+I couldn't resist.
+
 # Overview
 
 ## One Root Key
 
-The key to the whole `personal_kitchen` system is the data bag key (see below).
+The key to the whole `home_cooking` system is the data bag key (see below).
 You'll need to keep it in a safe place.
 
 ## A Repo
@@ -37,16 +41,10 @@ There are three independent modules:
 
 For each, you can specify programs to install and configurations to set.
 
-# Dependencies
-
-```shell
-# apt install gpg2 pass
-```
-
 # Install
 
 ```shell
-$ gem install personal_kitchen
+$ gem install home_cooking
 ```
 
 # Create your Personal Kitchen
@@ -59,7 +57,7 @@ keep your personal kitchen.
 ## Creation
 
 ```shell
-$ personal_kitchen init --path my-kitchen
+$ home_cooking init --path my-kitchen
 ```
 
 This creates a directory `my-kitchen` with all the necessary initial setup.
@@ -68,7 +66,7 @@ Obviously, you can call it whatever you like.
 # Set Some Defaults
 
 ```shell
-$ personal-kitchen defaults
+$ home_cooking defaults
 ```
 
 This command allows you to set up default values to be used across all nodes.
@@ -183,7 +181,7 @@ separate, locations.
 ### The Data Bag
 
 Initially, the kitchen contains a single data bag
-`data_bags/personal_kitchen/bootstrap` with the minimum bootstrap secrets:
+`data_bags/home_cooking/bootstrap` with the minimum bootstrap secrets:
 
 * the URL of your `pass` store repository,
 * the GPG key used to encrypt data in the store,
@@ -193,13 +191,13 @@ Initially, the kitchen contains a single data bag
 
 Use `pass` as your password store, and commit and push changes to your remote
 repo.
-That said, please don't touch the keys under `personal_kitchen` as they are
-needed to make `personal_kitchen` work!
+That said, please don't touch the keys under `home_cooking` as they are
+needed to make `home_cooking` work!
 
 # Contributing
 
 Bug reports and pull requests are welcome on GitHub at
-https://gitlab.com/joeyates/personal_kitchen.
+https://gitlab.com/joeyates/home_cooking.
 
 # License
 

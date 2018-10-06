@@ -1,7 +1,0 @@
-#!/usr/bin/env ruby
-
-require "bundler/setup"
-require "personal_kitchen"
-
-PersonalKitchen::CLI.start(ARGV)
-

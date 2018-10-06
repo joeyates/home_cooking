@@ -1,4 +1,4 @@
-class PersonalKitchen::CLI::Defaults < Thor
+class HomeCooking::CLI::Defaults < Thor
   include Thor::Actions
 
   DATA_BAG = "personal"
@@ -22,6 +22,6 @@ class PersonalKitchen::CLI::Defaults < Thor
 
   def data_bag
     @data_bag ||=
-      PersonalKitchen::DataBag.new(group: "personal", item: "defaults")
+      HomeCooking::DataBag.new(group: "personal", item: "defaults")
   end
 end

@@ -1,4 +1,4 @@
-class PersonalKitchen::DataBag
+class HomeCooking::DataBag
   require "chef"
   require "chef/workstation_config_loader"
   require "chef/encrypted_data_bag_item"

@@ -1,10 +1,10 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) if !$LOAD_PATH.include?(lib)
-require "personal_kitchen/version"
+require "home_cooking/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "personal_kitchen"
-  spec.version       = PersonalKitchen::VERSION
+  spec.name          = "home_cooking"
+  spec.version       = HomeCooking::VERSION
   spec.authors       = ["Joe Yates"]
   spec.email         = ["joe.g.yates@gmail.com"]
 
@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
     Create a Chef kitchen that handles default, and node-specific
     setup for your user environment on every computer you use.
   EOT
-  spec.homepage      = "https://gitlab.com/joeyates/personal_kitchen"
+  spec.homepage      = "https://gitlab.com/joeyates/home_cooking"
   spec.license       = "MIT"
   spec.required_ruby_version = ">= 2.4"
 

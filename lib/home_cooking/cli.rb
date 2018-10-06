@@ -1,11 +1,11 @@
 require "thor"
 
-class PersonalKitchen::CLI < Thor
-  require "personal_kitchen/cli/helpers"
+class HomeCooking::CLI < Thor
+  require "home_cooking/cli/helpers"
 
-  autoload :Init, "personal_kitchen/cli/init"
-  autoload :Defaults, "personal_kitchen/cli/defaults"
-  autoload :EncryptedFile, "personal_kitchen/cli/encrypted_file"
+  autoload :Init, "home_cooking/cli/init"
+  autoload :Defaults, "home_cooking/cli/defaults"
+  autoload :EncryptedFile, "home_cooking/cli/encrypted_file"
 
   include Helpers
 
@@ -19,7 +19,7 @@ class PersonalKitchen::CLI < Thor
     aliases: ["-n"]
   )
   def init
-    require "personal_kitchen/cli/init"
+    require "home_cooking/cli/init"
     Init.new(symbolized(options)).run
   end
 
@@ -33,7 +33,7 @@ class PersonalKitchen::CLI < Thor
     aliases: ["-u"]
   )
   def defaults
-    require "personal_kitchen/cli/defaults"
+    require "home_cooking/cli/defaults"
     Defaults.new(symbolized(options)).run
   end
 

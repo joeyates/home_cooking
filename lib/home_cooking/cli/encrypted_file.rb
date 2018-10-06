@@ -1,10 +1,10 @@
 require "base64"
 require "thor"
 
-class PersonalKitchen::CLI::EncryptedFile < Thor
-  require "personal_kitchen/cli/helpers"
+class HomeCooking::CLI::EncryptedFile < Thor
+  require "home_cooking/cli/helpers"
 
-  include PersonalKitchen::CLI::Helpers
+  include HomeCooking::CLI::Helpers
 
   attr_reader :encode
   attr_reader :full_path
@@ -83,7 +83,7 @@ class PersonalKitchen::CLI::EncryptedFile < Thor
 
   def data_bag
     @data_bag ||=
-      PersonalKitchen::DataBag.new(group: "personal", item: "files")
+      HomeCooking::DataBag.new(group: "personal", item: "files")
   end
 
   def build_entry
