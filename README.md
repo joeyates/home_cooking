@@ -2,6 +2,9 @@
 
 Configure your environment on various computers.
 
+You create a [chef][chef] project or "kitchen" to manage your user setup on
+various computers.
+
 You can manage your local computer, or a desktop or server over a network.
 
 # Why?
@@ -33,7 +36,7 @@ to clone the repo and deploy to the computer itself.
 
 ## Three Modules
 
-There are three independent modules:
+There are three independent cookbooks:
 
 * system - manages system services,
 * shell - manages shell configuration and command line programs,
@@ -46,6 +49,8 @@ For each, you can specify programs to install and configurations to set.
 ```shell
 $ gem install home_cooking
 ```
+
+# How It Works
 
 # Create your Personal Kitchen
 
@@ -96,7 +101,7 @@ e.g. `joes-computer.example.com` or, failing that, its IP address.
 ## Create the Base Configuration
 
 ```shell
-$ personal-kitchen add-node {{hostname}}
+$ home_cooking add-node {{hostname}}
 ```
 
 You will be asked for the user name, group, etc.
@@ -109,6 +114,10 @@ computers you use.
 
 Everything that is host ("node") specific, should go in the node configuration
 file (under `nodes`).
+
+# Associated Software
+
+* pass
 
 ## Default/Global
 
@@ -178,21 +187,10 @@ You should copy this key to a safe place.
 Store this key on two (or more) USB thumb drives, and keep them in two safe,
 separate, locations.
 
-### The Data Bag
-
-Initially, the kitchen contains a single data bag
-`data_bags/home_cooking/bootstrap` with the minimum bootstrap secrets:
-
-* the URL of your `pass` store repository,
-* the GPG key used to encrypt data in the store,
-* the SSH key used to access the repository.
-
 ### The `pass` Store
 
 Use `pass` as your password store, and commit and push changes to your remote
 repo.
-That said, please don't touch the keys under `home_cooking` as they are
-needed to make `home_cooking` work!
 
 # Similar Software
 
