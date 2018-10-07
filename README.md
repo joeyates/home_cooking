@@ -194,6 +194,11 @@ repo.
 That said, please don't touch the keys under `home_cooking` as they are
 needed to make `home_cooking` work!
 
+# Similar Software
+
+* https://github.com/boxen
+* https://github.com/Microsoft/macos-cookbook
+
 # Contributing
 
 Bug reports and pull requests are welcome on GitHub at
