@@ -75,6 +75,23 @@ class HomeCooking::CLI::EncryptedFile < Thor
     end
   end
 
+  desc "install <path>", "install a file from the encrypted data bag"
+  def install(path)
+    @path = path
+    @full_path = File.expand_path(path, ENV["HOME"])
+    if !exists_in_data_bag?
+      raise "The file '#{full_path}' is not present in the data bag"
+    end
+    content = entry["content"]
+    encoding = entry["encoding"]
+    if encoding == "Base64" && decode?
+      content = Base64.decode64(content)
+    end
+
+    File.write(full_path, content)
+    File.chmod(entry["mode"].to_i(8), full_path)
+  end
+
   desc "info <path>", "dump information about file in the encrypted data bag"
   def info(path)
     @path = path
