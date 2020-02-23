@@ -86,6 +86,11 @@ Defaults are:
 * `user/shell` - defaults to `/bin/bash`,
 * `user/locales` - defaults to `[]`.
 
+# Manage Secret Files
+
+Use the provided `home_cooking` program to list, add, remove and dump
+files to be installed.
+
 # Add a Node
 
 ## Preparation
