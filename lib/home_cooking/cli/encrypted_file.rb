@@ -75,6 +75,17 @@ class HomeCooking::CLI::EncryptedFile < Thor
     end
   end
 
+  desc "info <path>", "dump information about file in the encrypted data bag"
+  def info(path)
+    @path = path
+    @full_path = File.expand_path(path, ENV["HOME"])
+    if !exists_in_data_bag?
+      raise "The file '#{full_path}' is not present in the data bag"
+    end
+
+    puts "entry: #{entry.inspect}"
+  end
+
   desc "diff <path>", "show difference between on-disk and data bag versions of a file"
   def diff(path)
     @path = path
