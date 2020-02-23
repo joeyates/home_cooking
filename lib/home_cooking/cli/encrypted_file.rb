@@ -66,7 +66,7 @@ class HomeCooking::CLI::EncryptedFile < Thor
       content = entry["content"]
       encoding = entry["encoding"]
       if encoding == "Base64" && decode?
-        puts Base64.decode64(encoding)
+        puts Base64.decode64(content)
       else
         puts content
       end
