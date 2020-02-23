@@ -101,6 +101,32 @@ class HomeCooking::CLI::EncryptedFile < Thor
     puts Diffy::Diff.new(data_bag, on_disk).to_s(:color)
   end
 
+  desc "changed", "list files which have been changed on disk"
+  def changed
+    changed = files.filter do |f|
+      path = f["path"]
+      data_bag = f["content"]
+      encoding = f["encoding"]
+      if encoding == "Base64"
+        data_bag = Base64.decode64(data_bag)
+      end
+
+      full_path = File.expand_path(path, ENV["HOME"])
+
+      if File.exist?(full_path)
+        on_disk = ::File.read(full_path)
+        data_bag != on_disk
+      else
+        true
+      end
+    end
+    names = changed.map { |f| f["path"] }
+
+    return if names.empty?
+
+    puts names.sort.join("\n")
+  end
+
   desc "list", "list files in the encrypted data bag"
   def list
     puts files.map { |f| f["path"] }.sort.join("\n")
