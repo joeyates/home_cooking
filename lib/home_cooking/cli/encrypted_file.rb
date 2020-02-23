@@ -1,4 +1,5 @@
 require "base64"
+require "diffy"
 require "thor"
 
 class HomeCooking::CLI::EncryptedFile < Thor
@@ -72,6 +73,32 @@ class HomeCooking::CLI::EncryptedFile < Thor
     else
       raise "The file '#{full_path}' is not present in the data bag"
     end
+  end
+
+  desc "diff <path>", "show difference between on-disk and data bag versions of a file"
+  def diff(path)
+    @path = path
+    @full_path = File.expand_path(path, ENV["HOME"])
+
+    if !exists_in_data_bag?
+      raise "The file '#{full_path}' is not present in the data bag"
+    end
+
+    if !File.exist?(full_path)
+      raise "The file '#{full_path}' is not present on disk"
+    end
+
+    data_bag = entry["content"]
+    encoding = entry["encoding"]
+    if encoding == "Base64"
+      data_bag = Base64.decode64(data_bag)
+    end
+
+    on_disk = ::File.read(full_path)
+
+    return if data_bag == on_disk
+
+    puts Diffy::Diff.new(data_bag, on_disk).to_s(:color)
   end
 
   desc "list", "list files in the encrypted data bag"
