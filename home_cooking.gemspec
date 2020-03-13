@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Joe Yates"]
   spec.email         = ["joe.g.yates@gmail.com"]
 
-  spec.summary       = %q{Use Chef to configure your users on various computers.}
+  spec.summary       = %q{Configure your user's environment on various computers.}
   spec.description   = <<~EOT
-    Create a Chef kitchen that handles default, and node-specific
+    Creates a Chef kitchen that handles default, and node-specific
     setup for your user environment on every computer you use.
   EOT
   spec.homepage      = "https://gitlab.com/joeyates/home_cooking"

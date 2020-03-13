@@ -11,7 +11,7 @@ class HomeCooking::CLI::EncryptedFile < Thor
   attr_reader :full_path
   attr_reader :path
 
-  desc "add <path> [--force]", "add a file to the encrypted data bag"
+  desc "add <path> [--encode] [--force]", "add a file to the encrypted data bag"
   method_option(
     "force",
     type: :boolean,
