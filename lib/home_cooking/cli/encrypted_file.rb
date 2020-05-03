@@ -131,7 +131,7 @@ class HomeCooking::CLI::EncryptedFile < Thor
 
   desc "changed", "list files which have been changed on disk"
   def changed
-    changed = files.filter do |f|
+    changed = files.select do |f|
       path = f["path"]
       data_bag = f["content"]
       encoding = f["encoding"]
